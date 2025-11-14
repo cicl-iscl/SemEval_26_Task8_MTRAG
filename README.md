@@ -1,5 +1,5 @@
 # Multi-turn-RAG
-09.11.2025 trying to upload files, BM25 retrieval for one benchmark 
+09.11.2025 trying to upload files, BM25 retrieval for one benchmark  
 14.11.2025 finish the baseline by using BM25  
 To do: trying dense indexing
 
