@@ -1,18 +1,20 @@
 # Multi-turn-RAG
 09.11.2025 trying to upload files, BM25 retrieval for one benchmark  
 14.11.2025 finish the baseline by using BM25  
-To do: trying dense indexing
+19.11.2025 get the baseline of the dense indexing  
+To do: do the subquestion and question rewrite
 
 Done:  
 1. Upload the dataset into Github 
 2. using git LFS to upload indexes.zip,  
 please install git LFS before clone (basically the index for BM25 is fixed, so please run the code from BM25_all.py to get the index and please make sure you have indexes directory)
 3. Using all the corpus to do the BM25 retrieval, also writing as method to read relative path, cmd code, evaluation etc. on BM25_all.py
+4. Using bge to run dense indexing and retrieval baseline
 
 temp:
-bm25中的split我这边改成了train才跑出来，看看是否需要改回dev。（不用改)  
-bge的indexes和bm25的不一样
-bge做dense embedding太大，拿公司电脑跑一下（用colab大概跑一個多小時）看要不要真的跟老師申請bwHPC
+bge做dense embedding太大，拿公司电脑跑一下（用colab大概跑一個多小時）看要不要真的跟老師申請bwHPC.   
+
+### Evaluation of Dense Indexing(BGE)   
 
 |index|dataset|k|nDCG|Recall|
 |---|---|---|---|---|
@@ -32,6 +34,8 @@ bge做dense embedding太大，拿公司电脑跑一下（用colab大概跑一個
 |13|govt|3|0\.27202|0\.26672|
 |14|govt|5|0\.30335|0\.33867|
 |15|govt|10|0\.35649|0\.46446|
+
+### Evaluation of BM25
 
 | dataset   |   k1 |   b |   nDCG@1 |   Recall@1 |   nDCG@3 |   Recall@3 |   nDCG@5 |   Recall@5 |   nDCG@10 |   Recall@10 |
 |:----------|-----:|----:|---------:|-----------:|---------:|-----------:|---------:|-----------:|----------:|------------:|
