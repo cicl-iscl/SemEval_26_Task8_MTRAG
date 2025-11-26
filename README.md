@@ -2,6 +2,7 @@
 09.11.2025 trying to upload files, BM25 retrieval for one benchmark  
 14.11.2025 finish the baseline by using BM25  
 19.11.2025 get the baseline of the dense indexing  
+26.11.2025 first try for question rewrite, but the evaluation is lower than the baseline, will keep fixing some pronoun problem first before the top-k history finding   
 To do: do the subquestion and question rewrite
 
 Done:  
@@ -10,9 +11,12 @@ Done:
 please install git LFS before clone (basically the index for BM25 is fixed, so please run the code from BM25_all.py to get the index and please make sure you have indexes directory)
 3. Using all the corpus to do the BM25 retrieval, also writing as method to read relative path, cmd code, evaluation etc. on BM25_all.py
 4. Using bge to run dense indexing and retrieval baseline
+5. write a evaluation method for dense retrieval in evaluation_dense_retrieval.py
+6. queries_rewrite.ipynb is the first try for rewrite with top-k history, will revise to see if it can pass the baseline
 
 temp:
-bge做dense embedding太大，拿公司电脑跑一下（用colab大概跑一個多小時）看要不要真的跟老師申請bwHPC.   
+bge做dense embedding太大，拿公司电脑跑一下（用colab大概跑一個多小時）看要不要真的跟老師申請bwHPC.  
+如果想要跑 queries_rewrite.ipynb的話 要使用了ollama 並且下載了model在本地進行部署
 
 ### Evaluation of Dense Indexing(BGE)   
 
