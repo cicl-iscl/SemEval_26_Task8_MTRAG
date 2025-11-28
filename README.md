@@ -17,6 +17,7 @@ please install git LFS before clone (basically the index for BM25 is fixed, so p
 temp:
 bge做dense embedding太大，拿公司电脑跑一下（用colab大概跑一個多小時）看要不要真的跟老師申請bwHPC.  
 如果想要跑 queries_rewrite.ipynb的話 要使用了ollama 並且下載了model在本地進行部署
+Salmon:也可以參考`ollama_xxx_colab_exp.ipynb`, 免費版colab的T4 gpu 跑14b model 不是大問題
 
 ### Evaluation of Dense Indexing(BGE)   
 
