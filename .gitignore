@@ -1,0 +1,5 @@
+# ignore large unzipped corpora
+dataset/clapnq/corpus.jsonl
+dataset/cloud/corpus.jsonl
+dataset/fiqa/corpus.jsonl
+dataset/govt/corpus.jsonl
