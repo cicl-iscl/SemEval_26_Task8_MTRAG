@@ -51,3 +51,18 @@ Salmon:也可以參考`ollama_xxx_colab_exp.ipynb`, 免費版colab的T4 gpu 跑1
 | fiqa      |  1.2 | 0.4 |   0.1389 |     0.044  |   0.1295 |     0.125  |   0.1619 |     0.1991 |    0.1812 |      0.2454 |
 | govt      |  1.5 | 0.8 |   0.2683 |     0.1138 |   0.2569 |     0.2378 |   0.2713 |     0.2886 |    0.31   |      0.3825 |
 
+Qwen2.5 7B with history selected evaluation:  
+{'ndcg': {'NDCG@1': 0.39423, 'NDCG@3': 0.36685, 'NDCG@5': 0.38838, 'NDCG@10': 0.44656}, 'recall': {'Recall@1': 0.15128, 'Recall@3': 0.33915, 'Recall@5': 0.41443, 'Recall@10': 0.55185}}  
+
+Qwen2.5 7B without selection:  
+{'ndcg': {'NDCG@1': 0.375, 'NDCG@3': 0.34785, 'NDCG@5': 0.38127, 'NDCG@10': 0.42871}, 'recall': {'Recall@1': 0.14447, 'Recall@3': 0.31872, 'Recall@5': 0.41836, 'Recall@10': 0.5283}}
+
+
+mixtral 8x7b  
+{'ndcg': {'NDCG@1': 0.40865, 'NDCG@3': 0.37001, 'NDCG@5': 0.40704, 'NDCG@10': 0.45717}, 'recall': {'Recall@1': 0.1595, 'Recall@3': 0.34705, 'Recall@5': 0.4507, 'Recall@10': 0.56536}}
+
+Qwen3 14b  
+{'ndcg': {'NDCG@1': 0.41827, 'NDCG@3': 0.3613, 'NDCG@5': 0.39691, 'NDCG@10': 0.45795}, 'recall': {'Recall@1': 0.15389, 'Recall@3': 0.32621, 'Recall@5': 0.43143, 'Recall@10': 0.57555}}
+
+Gemma 12b  
+{'ndcg': {'NDCG@1': 0.42788, 'NDCG@3': 0.36751, 'NDCG@5': 0.39516, 'NDCG@10': 0.45602}, 'recall': {'Recall@1': 0.17056, 'Recall@3': 0.32541, 'Recall@5': 0.41208, 'Recall@10': 0.55443}}
