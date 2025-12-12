@@ -6,7 +6,7 @@ from tqdm.auto import tqdm
 import faiss
 
 PROJECT_ROOT = Path("..").resolve()
-DATASET = "cloud"
+DATASET = "clapnq"
 CORPUS_PATH = PROJECT_ROOT / "dataset" / DATASET / "corpus.jsonl"
 
 MODEL = "qwen3-embedding:4b"   # 你裝的 Qwen embedding 模型名稱（示例）
@@ -29,6 +29,7 @@ for text in tqdm(docs):
     all_embs.append(emb)
 
 embeddings = np.array(all_embs, dtype="float32")
+faiss.normalize_L2(embeddings)
 dim = embeddings.shape[1]
 print("Embedding shape:", embeddings.shape)
 

@@ -5,9 +5,6 @@ import numpy as np
 import json, re
 import ollama
 from pathlib import Path
-import run_retrieval_eval
-
-from sqlalchemy.orm.collections import collection
 
 from src.run_retrieval_eval import load_qrels, evaluate
 
@@ -45,7 +42,8 @@ def retrieve(QUERIES_PATH, k:int = 10) -> Dict[str, Dict[str, float]]:
                 continue
             query = query_list[0]
             encoded_query = encode_query(query)
-            distances, indices = index.search(encoded_query, k)
+            l2_query = faiss.normalize_L2(encoded_query)
+            distances, indices = index.search(l2_query, k)
             hits = {}
             for idx, score in zip(indices[0], distances[0]):
                 docid = corpus_id[idx]
