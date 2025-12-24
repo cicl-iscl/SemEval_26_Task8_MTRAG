@@ -3,7 +3,8 @@
 14.11.2025 finish the baseline by using BM25  
 19.11.2025 get the baseline of the dense indexing  
 26.11.2025 first try for question rewrite, but the evaluation is lower than the baseline, will keep fixing some pronoun problem first before the top-k history finding   
-To do: do the subquestion and question rewrite
+24.12.2025 upload the generator subtask script  
+Want to try: oversampling, summarizing the history conversation before tuning, add question type to the prompting? 
 
 Done:  
 1. Upload the dataset into Github 
@@ -13,6 +14,7 @@ please install git LFS before clone (basically the index for BM25 is fixed, so p
 4. Using bge to run dense indexing and retrieval baseline
 5. write a evaluation method for dense retrieval in evaluation_dense_retrieval.py
 6. queries_rewrite.ipynb is the first try for rewrite with top-k history, will revise to see if it can pass the baseline
+7. Using LoRA to finetune the Qwen 3 14B model
 
 temp:
 如果想要跑 queries_rewrite.ipynb的話 要使用了ollama 並且下載了model在本地進行部署
@@ -66,3 +68,6 @@ Qwen3 14b
 
 Gemma 12b  
 {'ndcg': {'NDCG@1': 0.42788, 'NDCG@3': 0.36751, 'NDCG@5': 0.39516, 'NDCG@10': 0.45602}, 'recall': {'Recall@1': 0.17056, 'Recall@3': 0.32541, 'Recall@5': 0.41208, 'Recall@10': 0.55443}}
+
+Using the Qwen3_4B embedding with Qwen3_30B query rewrite the evaluation is:  
+{’NDCG@1‘: 0.48077, ’NDCG@3‘: 0.41462, ’NDCG@5‘: 0.45521, ’NDCG@10‘: 0.50715} {’Recall@1‘: 0.19024, ’Recall@3‘: 0.37089, ’Recall@5‘: 0.48541, ’Recall@10‘: 0.61034}
