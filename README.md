@@ -15,6 +15,8 @@ please install git LFS before clone (basically the index for BM25 is fixed, so p
 5. write a evaluation method for dense retrieval in evaluation_dense_retrieval.py
 6. queries_rewrite.ipynb is the first try for rewrite with top-k history, will revise to see if it can pass the baseline
 7. Using LoRA to finetune the Qwen 3 14B model
+8. lora adapter is in the belows link:
+https://drive.google.com/drive/folders/1LwCM-kRKFUUxcI4oSQaEQmj8NdF0xU2V?usp=share_link
 
 temp:
 如果想要跑 queries_rewrite.ipynb的話 要使用了ollama 並且下載了model在本地進行部署
