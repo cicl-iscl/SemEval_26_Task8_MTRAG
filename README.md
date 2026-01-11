@@ -3,8 +3,9 @@
 14.11.2025 finish the baseline by using BM25  
 19.11.2025 get the baseline of the dense indexing  
 26.11.2025 first try for question rewrite, but the evaluation is lower than the baseline, will keep fixing some pronoun problem first before the top-k history finding   
-24.12.2025 upload the generator subtask script  
-Want to try: oversampling, summarizing the history conversation before tuning, add question type to the prompting? 
+24.12.2025 upload the generator subtask script   
+11.01.2026 upload the subtask c script, and the baseline is 0.38(we should use the query rewrites for retrieval and maybe for the generator as current question)
+
 
 Done:  
 1. Upload the dataset into Github 
@@ -17,6 +18,7 @@ please install git LFS before clone (basically the index for BM25 is fixed, so p
 7. Using LoRA to finetune the Qwen 3 14B model
 8. lora adapter is in the belows link:
 https://drive.google.com/drive/folders/1LwCM-kRKFUUxcI4oSQaEQmj8NdF0xU2V?usp=share_link
+9. subtask c script without query rewrite
 
 temp:
 如果想要跑 queries_rewrite.ipynb的話 要使用了ollama 並且下載了model在本地進行部署
