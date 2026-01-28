@@ -74,4 +74,46 @@ Gemma 12b
 {'ndcg': {'NDCG@1': 0.42788, 'NDCG@3': 0.36751, 'NDCG@5': 0.39516, 'NDCG@10': 0.45602}, 'recall': {'Recall@1': 0.17056, 'Recall@3': 0.32541, 'Recall@5': 0.41208, 'Recall@10': 0.55443}}
 
 Using the Qwen3_4B embedding with Qwen3_30B query rewrite the evaluation is:  
-{’NDCG@1‘: 0.48077, ’NDCG@3‘: 0.41462, ’NDCG@5‘: 0.45521, ’NDCG@10‘: 0.50715} {’Recall@1‘: 0.19024, ’Recall@3‘: 0.37089, ’Recall@5‘: 0.48541, ’Recall@10‘: 0.61034}
+{’NDCG@1‘: 0.48077, ’NDCG@3‘: 0.41462, ’NDCG@5‘: 0.45521, ’NDCG@10‘: 0.50715} {’Recall@1‘: 0.19024, ’Recall@3‘: 0.37089, ’Recall@5‘: 0.48541, ’Recall@10‘: 0.61034}  
+
+### subtask B Performance comparison of generation strategies
+
+| Method                                 | Score     |
+|----------------------------------------|-----------|
+| Baseline                               | 0.361     |
+| Qwen2.5 7B + LoRA                      | 0.423     |
+| Qwen 2.5 7B + LoRA + Chat mode         | 0.425     |
+| Qwen 3 14B                             | 0.451     |
+| Qwen3 14B + LoRA                       | **0.526** |
+| Qwen3 14B + LoRA (Oversampling)        | 0.516     |
+| Qwen3 14B + LoRA (Single Ref)          | 0.517     |
+| Qwen3 14B + LoRA + Inference Prompt    | 0.518     |
+| Qwen3 14B + LoRA + Classifier(LoRA)    | 0.383     |      
+| Qwen3 14B + LoRA + Classifier(RoBERTa) | 0.493     |
+
+
+
+### The evaluation of the Classifier by using RoBERTa
+               precision    recall  f1-score   support
+
+           0     0.8526    0.9779    0.9110       136
+           1     0.0000    0.0000    0.0000        23
+           2     0.8000    1.0000    0.8889         8
+           3     0.0000    0.0000    0.0000         2
+
+    accuracy                         0.8343       169
+    macro avg     0.4131    0.4945    0.4500       169
+    weighted avg     0.7240    0.8343    0.7752       169
+
+    Confusion matrix (rows=true, cols=pred; order = ['ANSWERABLE', 'PARTIAL', 'UNANSWERABLE', 'CONVERSATIONAL'] ):
+        [[133   3   0   0]
+         [ 23   0   0   0]
+         [  0   0   8   0]
+         [  0   0   2   0]]
+
+### Subtask C Performance comparison
+| Method                                          | Score       |
+|-------------------------------------------------|-------------|
+| Retriever + Generator (Baseline)                | 0.384       |
+| Retriever(top-10) + Reranker(top-5) + Generator | 0.421       |
+| Retriever(top-50) + Reranker(top-5) + Generator | **0.435**  |
