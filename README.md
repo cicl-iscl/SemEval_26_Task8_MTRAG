@@ -1,31 +1,64 @@
-# Multi-turn-RAG
-09.11.2025 trying to upload files, BM25 retrieval for one benchmark  
-14.11.2025 finish the baseline by using BM25  
-19.11.2025 get the baseline of the dense indexing  
-26.11.2025 first try for question rewrite, but the evaluation is lower than the baseline, will keep fixing some pronoun problem first before the top-k history finding   
-24.12.2025 upload the generator subtask script   
-11.01.2026 upload the subtask c script, and the baseline is 0.38(we should use the query rewrites for retrieval and maybe for the generator as current question)
+# Multi-Turn RAG System (SemEval Task 8: MTRAG)
 
+## Overview
 
-Done:  
-1. Upload the dataset into Github 
-2. using git LFS to upload indexes.zip,  
-please install git LFS before clone (basically the index for BM25 is fixed, so please run the code from BM25_all.py to get the index and please make sure you have indexes directory)
-3. Using all the corpus to do the BM25 retrieval, also writing as method to read relative path, cmd code, evaluation etc. on BM25_all.py
-4. Using bge to run dense indexing and retrieval baseline
-5. write a evaluation method for dense retrieval in evaluation_dense_retrieval.py
-6. queries_rewrite.ipynb is the first try for rewrite with top-k history, will revise to see if it can pass the baseline
-7. Using LoRA to finetune the Qwen 3 14B model
-8. lora adapter is in the belows link:
-https://drive.google.com/drive/folders/1LwCM-kRKFUUxcI4oSQaEQmj8NdF0xU2V?usp=share_link
-9. subtask c script without query rewrite
+This repository implements a multi-turn Retrieval-Augmented Generation (RAG) system for conversational question answering.
 
-temp:
-如果想要跑 queries_rewrite.ipynb的話 要使用了ollama 並且下載了model在本地進行部署
-Salmon:也可以參考`ollama_xxx_colab_exp.ipynb`, 免費版colab的T4 gpu 跑14b model 不是大問題
+The system is designed to retrieve relevant evidence from a document corpus and generate grounded responses in multi-turn conversations. 
+It was developed for the Multi-Turn RAG benchmark in SemEval.
 
-将retrieval_first_try.ipynb和BM25_all.py可以按照config.py中的路径看着改（但其实也可以不用，反正是baseline）
+Our pipeline consists of:
 
+- history-aware query rewriting
+- dense retrieval using embedding models
+- cross-encoder reranking
+- LoRA-adapted generator for answer generation
+
+## System Architecture
+
+Our system follows a four-stage pipeline:
+
+1. **Query Rewriting**: Reformulates the user query using conversation history.
+
+2. **Dense Retrieval**: Retrieves candidate passages using embedding similarity.
+
+3. **Reranking**: A cross-encoder reranks retrieved passages to improve evidence quality.
+
+4. **Answer Generation**: A LoRA-adapted LLM generates the final response grounded in retrieved passages.
+
+## Models
+
+- Embedding model: Qwen3 embedding
+- Reranker: cross-encoder/ms-marco-MiniLM-L12-v2
+- Generator: Qwen3 LLM with LoRA fine-tuning
+
+## Dataset
+
+We use the official dataset provided by the SemEval MTRAG benchmark.
+
+The dataset contains multi-turn conversational questions paired with evidence passages and reference answers.
+
+Data is split into:
+
+- training
+- development
+- test set (released later by the organizers)  
+
+The test set is not included in this repository because it is distributed privately by the task organizers.
+
+## Evaluation
+
+Retrieval quality is evaluated using:
+
+- nDCG@k
+- Recall@k
+
+Answer quality is evaluated using:
+
+- RL_agg
+- LLM-based evaluation metrics
+
+For more details about the evaluation protocol and metrics, please refer to the MTRAG benchmark paper.
 
 ### Evaluation of Dense Indexing(BGE)   
 
@@ -78,18 +111,18 @@ Using the Qwen3_4B embedding with Qwen3_30B query rewrite the evaluation is:
 
 ### subtask B Performance comparison of generation strategies
 
-| Method                                 | Score     |
-|----------------------------------------|-----------|
-| Baseline                               | 0.361     |
-| Qwen2.5 7B + LoRA                      | 0.423     |
-| Qwen 2.5 7B + LoRA + Chat mode         | 0.425     |
-| Qwen 3 14B                             | 0.451     |
-| Qwen3 14B + LoRA                       | **0.526** |
-| Qwen3 14B + LoRA (Oversampling)        | 0.516     |
-| Qwen3 14B + LoRA (Single Ref)          | 0.517     |
-| Qwen3 14B + LoRA + Inference Prompt    | 0.518     |
-| Qwen3 14B + LoRA + Classifier(LoRA)    | 0.383     |      
-| Qwen3 14B + LoRA + Classifier(RoBERTa) | 0.493     |
+| Method                                 | RL_agg Score |
+|----------------------------------------|--------------|
+| Baseline                               | 0.361        |
+| Qwen2.5 7B + LoRA                      | 0.423        |
+| Qwen 2.5 7B + LoRA + Chat mode         | 0.425        |
+| Qwen 3 14B                             | 0.451        |
+| Qwen3 14B + LoRA                       | **0.526**    |
+| Qwen3 14B + LoRA (Oversampling)        | 0.516        |
+| Qwen3 14B + LoRA (Single Ref)          | 0.517        |
+| Qwen3 14B + LoRA + Inference Prompt    | 0.518        |
+| Qwen3 14B + LoRA + Classifier(LoRA)    | 0.383        |      
+| Qwen3 14B + LoRA + Classifier(RoBERTa) | 0.493        |
 
 
 
@@ -112,8 +145,12 @@ Using the Qwen3_4B embedding with Qwen3_30B query rewrite the evaluation is:
          [  0   0   2   0]]
 
 ### Subtask C Performance comparison
-| Method                                          | Score       |
-|-------------------------------------------------|-------------|
-| Retriever + Generator (Baseline)                | 0.384       |
-| Retriever(top-10) + Reranker(top-5) + Generator | 0.421       |
-| Retriever(top-50) + Reranker(top-5) + Generator | **0.435**  |
+| Method                                          | RL_agg Score |
+|-------------------------------------------------|--------------|
+| Retriever + Generator (Baseline)                | 0.384        |
+| Retriever(top-10) + Reranker(top-5) + Generator | 0.421        |
+| Retriever(top-50) + Reranker(top-5) + Generator | **0.435**    |
+
+## Acknowledgements
+
+This work was developed at the University of Tübingen as part of the SemEval Multi-Turn RAG shared task.
